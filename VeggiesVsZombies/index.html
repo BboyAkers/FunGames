@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>PLANTS VS VEGGIES</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="user-scalable=0, minimum-scale=1.0, maximum-scale=1.0"/>
+        <script src='lib/quintus.js'></script>
+        <script src='lib/quintus_sprites.js'></script>
+        <script src='lib/quintus_scenes.js'></script>
+        <script src='lib/quintus_input.js'></script>
+        <script src='lib/quintus_anim.js'></script>
+        <script src='lib/quintus_2d.js'></script>
+        <script src='lib/quintus_touch.js'></script>
+        <script src='lib/quintus_ui.js'></script>   
+        <script src='lib/quintus_audio.js'></script>  
+    </head>
+    <body style="background-color: black;margin:0px;border:0px;">
+        <script>
+          //wait for the document to be loaded
+          window.addEventListener("load",function() {
+            //initiate the framework
+            var Q = window.Q = Quintus({development: true})
+              .include("Sprites, Scenes")
+              .setup({
+                width: 1080,
+                height: 720,
+                scaleToFit: true
+              });
+
+            //instructions on what to put on the stage
+            Q.scene("level", function(stage){
+              var sprite1 = new Q.Sprite({
+                x: 1080/2,
+                y: 720/2,
+                asset: "background.png"
+              });
+
+              stage.insert(sprite1);
+            });
+
+            //preload all assets
+            Q.load("background.png, sun.png, zombie1.png", function(){
+              Q.stageScene("level");
+            });
+          });
+        </script>
+    </body>
+</html>
