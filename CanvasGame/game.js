@@ -9,14 +9,14 @@ var canvasBg = document.getElementById("canvasBg"),
     //numEnemies = 5,
     //obstacles = [],
     isPlaying = false,
-    requestAnimFrame =  window.requestAnimationFrame ||
-                        window.webkitRequestAnimationFrame ||
-                        window.mozRequestAnimationFrame ||
-                        window.oRequestAnimationFrame ||
-                        window.msRequestAnimationFrame ||
-                        function(callback) {
-                            window.setTimeout(callback, 1000 / 60);
-                        },
+    requestAnimFrame = window.requestAnimationFrame ||
+        window.webkitRequestAnimationFrame ||
+        window.mozRequestAnimationFrame ||
+        window.oRequestAnimationFrame ||
+        window.msRequestAnimationFrame ||
+        function (callback) {
+            window.setTimeout(callback, 1000 / 60);
+        },
     imgSprite = new Image();
 imgSprite.src = "images/sprite.png";
 imgSprite.addEventListener("load", init, false);
