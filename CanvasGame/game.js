@@ -36,8 +36,44 @@ function begin() {
     requestAnimFrame(loop);
 }
 
-function loop() {
+function update(){
+    clearCtx(ctxEntities);
+    //updateAllEnemies();
+    //player1.update();
+}
+
+function draw() {
+    //drawAllEnemies();
+    //player1.draw();
 
 }
 
 
+function loop() {
+    if(isPlaying) {
+        update();
+        draw();
+        requestAnimFrame(loop);
+    }
+}
+
+function clearCtx(ctx) {
+    ctx.clearRect(0,0, canvasWidth, canvasHeight);
+}
+
+function randomRange(min, max) {
+    return Math.floor(Math.random() * (max + 1 - min)) + min;
+
+}
+
+
+function Player() {
+    this.srcX = 0;
+    this.srcY = 600;
+    this.width = 35;
+    this.height = 54;
+    this.drawX = 400;
+    this.drawY = 300;
+    this.centerX = this.drawX + (this.width / 2);
+    this.centerY = this.drawY + (this.height / 2);
+}
