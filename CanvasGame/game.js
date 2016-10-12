@@ -23,8 +23,8 @@ imgSprite.addEventListener("load", init, false);
 
 
 function init() {
-    //document.addEventListener("keydown", checkKeyDown, false);
-    //document.addEventListener("keyup", checkKeyUp, false);
+    document.addEventListener("keydown",function(e) { checkKey(e,true);}, false);
+    document.addEventListener("keyup",function(e) {checkKey(e, false);}, false);
     //defineObstacles();
     //initEnemies();
     begin();
@@ -77,11 +77,12 @@ function Player() {
     this.centerX = this.drawX + (this.width / 2);
     this.centerY = this.drawY + (this.height / 2);
     this.speed = 2;
-    //this.isUpKey = false;
-    //this.isRightKey = false;
-    //this.isDownKey = false;
-    //this.isLeftKey = false;
-    //this.isSpacebar = false;
+    this.isLeftKey = false;
+    this.isUpKey = false;
+    this.isRightKey = false;
+    this.isDownKey = false;
+
+    this.isSpacebar = false;
     //this.isShooting = false;
     //var numBullets = 10;
     //this.bullets = [];
@@ -94,7 +95,7 @@ function Player() {
 Player.prototype.update = function () {
     this.centerX = this.drawX + (this.width / 2);
     this.centerY = this.drawY + (this.height / 2);
-    //this.checkDirection();
+    this.checkDirection();
     //this.checkShooting();
     //this.updateAllBullets();
 };
@@ -103,3 +104,93 @@ Player.prototype.draw = function () {
     //this.drawAllBullets();
     ctxEntities.drawImage(imgSprite, this.srcX, this.srcY, this.width, this.height, this.drawX, this.drawY, this.width, this.height);
 };
+
+Player.prototype.checkDirection = function () {
+    var newDrawX = this.drawX,
+        newDrawY = this.drawY,
+        obstacleCollision = false;
+    if(this.isUpKey) {
+        newDrawY -= this.speed;
+        //Facing North
+        this.srcX = 35;
+    }
+    else if(this.isDownKey) {
+        newDrawY += this.speed;
+        //Facing South
+        this.srcX = 0;
+    }
+    else if(this.isRightKey) {
+        newDrawX += this.speed;
+        //Facing East
+        this.srcX = 105;
+    }
+    else if(this.isLeftKey) {
+        newDrawX -= this.speed;
+        //Facing West
+        this.srcX = 70;
+    }
+
+    //obstacleCollision = this.CheckObstacleCollide(newDrawX, newDrawY);
+
+    if(!obstacleCollision && !outOfBounds(this, newDrawX, newDrawY)) {
+        this.drawX = newDrawX;
+        this.drawY = newDrawY;
+    }
+
+};
+
+function checkKey(e, value) {
+    var keyID = e.keyCode || e.width;
+
+    //Left Arrow
+    if(keyID === 37) {
+        player1.isLeftKey = value;
+        e.preventDefault();
+    }
+
+    //Up arrow
+    if(keyID === 38) {
+        player1.isUpKey = value;
+        e.preventDefault();
+    }
+
+    //Right Arrow
+    if(keyID === 39) {
+        player1.isRightKey = value;
+        e.preventDefault();
+    }
+
+    //Down Arrow
+    if(keyID === 40) {
+        player1.isDownKey = value;
+        e.preventDefault();
+    }
+
+    //Spacebar
+    if(keyID === 32) {
+        player1.isSpacebar = value;
+        e.preventDefault();
+    }
+
+}
+/*
+    a = object
+    x = drawX(objects X position)
+    y = drawY(objects Y position)
+*/
+function outOfBounds(a, x, y) {
+    var newLeftX = x,
+        newTopY = y,
+        newRightX = x + a.width,
+        newBottomY =y + a.height,
+        treeLineLeft = 65,
+        treeLineTop = 5,
+        treeLineRight = 750,
+        treeLineBottom = 570;
+
+    return newBottomY > treeLineBottom  ||
+            newTopY < treeLineTop       ||
+            newRightX > treeLineRight   ||
+            newLeftX < treeLineLeft;
+
+}
